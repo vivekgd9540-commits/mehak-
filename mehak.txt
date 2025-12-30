@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday Mehak | 2025</title>
+    <!-- Tailwind CSS for Modern Styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- GSAP for Smooth Animations -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Inter:wght@300;500;800&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            background-color: #020617; /* Slate 950 */
+            color: #f1f5f9;
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+        }
+        .glass {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 24px;
+        }
+        .heart {
+            position: absolute;
+            color: #ec4899;
+            pointer-events: none;
+            filter: drop-shadow(0 0 10px rgba(236, 72, 153, 0.8));
+        }
+        .glow-text {
+            text-shadow: 0 0 20px rgba(236, 72, 153, 0.6);
+        }
+        .mehak-font {
+            font-family: 'Dancing Script', cursive;
+        }
+        #music-control {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 100;
+        }
+    </style>
+</head>
+<body class="flex flex-col items-center justify-center min-h-screen p-4">
+
+    <!-- Music (Lo-fi placeholder - Replace URL with your favorite link) -->
+    <audio id="bdayMusic" loop>
+        <source src="https://www.chosic.com/wp-content/uploads/2021/07/Rainy-Day-Lofi-Chill-Medium-Tempo.mp3" type="audio/mpeg">
+    </audio>
+
+    <!-- Floating Background Layer -->
+    <div id="heart-container" class="fixed inset-0 z-0"></div>
+
+    <!-- Hero Section -->
+    <main class="z-10 text-center glass p-8 md:p-16 max-w-2xl w-full opacity-0" id="main-card">
+        <div class="mb-6 inline-block p-4 rounded-full bg-pink-500/10 border border-pink-500/30">
+            <i class="fa-solid fa-cake-candles text-4xl text-pink-500 animate-bounce"></i>
+        </div>
+        
+        <h1 class="text-5xl md:text-7xl font-extrabold mb-4 tracking-tight">
+            Happy Birthday, <br>
+            <span class="text-pink-500 glow-text mehak-font">Mehak</span>
+        </h1>
+
+        <p class="text-lg md:text-xl text-slate-400 mb-8 font-light italic">
+            "To the person who makes every moment 2025 times better."
+        </p>
+
+        <!-- Dynamic Message Box -->
+        <div class="space-y-6 text-left border-l-2 border-pink-500 pl-6 my-10">
+            <p class="text-slate-300 reveal-text">Hey Mehak, another year older, another year of being amazing. 🌟</p>
+            <p class="text-slate-300 reveal-text">I wanted to build something special for you — a digital space as bright as your smile.</p>
+            <p class="text-slate-300 reveal-text font-semibold">May your 2025 be filled with love, laughter, and lo-fi vibes. 🎧✨</p>
+        </div>
+
+        <!-- Call to Action -->
+        <button onclick="startMagic()" id="magicBtn" class="bg-pink-600 hover:bg-pink-500 text-white px-8 py-3 rounded-full font-bold transition-all transform hover:scale-110 shadow-[0_0_20px_rgba(236_72_153_0.5)]">
+            Tap for Magic ✨
+        </button>
+    </main>
+
+    <!-- Footer Credit -->
+    <footer class="mt-12 text-slate-600 text-sm z-10">
+        Made with <i class="fa-solid fa-heart text-pink-800"></i> specifically for Mehak
+    </footer>
+
+    <!-- Music Control Icon -->
+    <div id="music-control" onclick="toggleMusic()" class="cursor-pointer glass w-12 h-12 flex items-center justify-center rounded-full text-pink-500 shadow-lg">
+        <i id="musicIcon" class="fa-solid fa-play"></i>
+    </div>
+
+    <script>
+        // Initial Page Entrance
+        window.addEventListener('load', () => {
+            gsap.to("#main-card", {
+                duration: 1.5,
+                opacity: 1,
+                y: -20,
+                ease: "power4.out"
+            });
+            gsap.from(".reveal-text", {
+                duration: 1,
+                opacity: 0,
+                x: -20,
+                stagger: 0.3,
+                delay: 1
+            });
+        });
+
+        // Function to create floating hearts
+        function createHeart() {
+            const container = document.getElementById('heart-container');
+            const heart = document.createElement('i');
+            heart.classList.add('fa-solid', 'fa-heart', 'heart');
+            
+            // Random position and size
+            const size = Math.random() * 20 + 10 + "px";
+            heart.style.left = Math.random() * 100 + "vw";
+            heart.style.fontSize = size;
+            heart.style.opacity = Math.random();
+            
+            container.appendChild(heart);
+
+            // Animate up
+            gsap.to(heart, {
+                y: -window.innerHeight - 100,
+                x: (Math.random() - 0.5) * 200,
+                duration: Math.random() * 3 + 2,
+                ease: "none",
+                onComplete: () => heart.remove()
+            });
+        }
+
+        // Triggered by button
+        function startMagic() {
+            // Intense heart burst
+            for(let i=0; i<30; i++) {
+                setTimeout(createHeart, i * 100);
+            }
+            
+            // Shake the card
+            gsap.to("#main-card", { duration: 0.1, x: 5, repeat: 5, yoyo: true });
+            
+            // Change button text
+            const btn = document.getElementById('magicBtn');
+            btn.innerHTML = "You're Special! 💖";
+            btn.style.backgroundColor = "#db2777";
+
+            // Start music if not playing
+            const music = document.getElementById('bdayMusic');
+            if(music.paused) toggleMusic();
+        }
+
+        // Background Hearts Interval
+        setInterval(createHeart, 400);
+
+        // Music Toggle Logic
+        function toggleMusic() {
+            const music = document.getElementById('bdayMusic');
+            const icon = document.getElementById('musicIcon');
+            if (music.paused) {
+                music.play();
+                icon.classList.remove('fa-play');
+                icon.classList.add('fa-pause');
+            } else {
+                music.pause();
+                icon.classList.remove('fa-pause');
+                icon.classList.add('fa-play');
+            }
+        }
+    </script>
+</body>
+</html>
